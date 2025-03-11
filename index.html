@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Estaciones</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>BUSCADOR ESTACIONES</h1>
-        <input type="text" id="codigo" placeholder="Código de estación">
-        <div id="suggestions"></div>
-        <button id="buscar">Buscar</button>
-        <p id="result"></p>
+        <div class="search-box">
+            <input type="text" id="stationCode" placeholder="CÓDIGO DE ESTACIÓN" oninput="filterSuggestions()">
+            <button class="clear-btn" onclick="clearInput()">&#10060;</button>
+            <ul id="suggestions"></ul>
+        </div>
+        <div class="result-box">
+            <p id="stationName">NOMBRE ESTACIÓN</p>
+        </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
