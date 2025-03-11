@@ -21,6 +21,7 @@ body {
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    position: relative; /* Para posicionar el desplegable correctamente */
 }
 
 h1 {
@@ -30,12 +31,13 @@ h1 {
 }
 
 #buscador {
-    width: 100%;
+    width: calc(100% - 40px); /* Ajustar el ancho para que no toque los bordes */
     padding: 10px;
     border: none;
     border-radius: 10px;
     font-size: 16px;
     margin-bottom: 10px;
+    box-sizing: border-box; /* Incluir el padding en el ancho */
 }
 
 #sugerencias {
@@ -49,8 +51,11 @@ h1 {
     overflow-y: auto; /* Scroll si hay muchas sugerencias */
     display: none; /* Ocultar por defecto */
     position: absolute; /* Posicionamiento absoluto */
-    width: calc(100% - 40px); /* Ancho del desplegable */
+    width: calc(100% - 40px); /* Mismo ancho que el cuadro de búsqueda */
+    left: 20px; /* Alinear con el cuadro de búsqueda */
+    top: 100%; /* Colocar debajo del cuadro de búsqueda */
     z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para el desplegable */
 }
 
 #sugerencias li {
