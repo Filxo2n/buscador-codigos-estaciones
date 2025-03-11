@@ -1,5 +1,11 @@
 let estaciones = {};
 
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").then(() => {
+        console.log("Service Worker registrado.");
+    });
+}
+
 function cargarExcel() {
     fetch('listado-codigos-estaciones.xlsx')
         .then(response => response.arrayBuffer())
