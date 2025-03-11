@@ -43,13 +43,21 @@ h1 {
     padding: 0;
     margin: 0;
     text-align: left;
+    background-color: #00703C; /* Fondo del desplegable */
+    border-radius: 10px;
+    max-height: 200px; /* Altura máxima del desplegable */
+    overflow-y: auto; /* Scroll si hay muchas sugerencias */
+    display: none; /* Ocultar por defecto */
+    position: absolute; /* Posicionamiento absoluto */
+    width: calc(100% - 40px); /* Ancho del desplegable */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
 }
 
 #sugerencias li {
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    margin-bottom: 5px;
+    margin: 5px;
     color: white;
     cursor: pointer;
 }
