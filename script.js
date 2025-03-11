@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Función para mostrar sugerencias
             buscador.addEventListener("input", function () {
                 const valor = buscador.value.toUpperCase();
-                sugerencias.innerHTML = "";
+                sugerencias.innerHTML = ""; // Limpiar sugerencias anteriores
 
                 if (valor.length > 0) {
                     const resultados = datos.filter(estacion =>
@@ -28,17 +28,31 @@ document.addEventListener("DOMContentLoaded", function () {
                         estacion.nombre.toUpperCase().includes(valor)
                     );
 
-                    resultados.forEach(estacion => {
-                        const li = document.createElement("li");
-                        li.textContent = `${estacion.codigo} - ${estacion.nombre}`;
-                        li.addEventListener("click", () => {
-                            // Al hacer clic en una sugerencia, llenar el campo de búsqueda
-                            buscador.value = `${estacion.codigo} - ${estacion.nombre}`;
-                            sugerencias.innerHTML = ""; // Limpiar sugerencias
-                            mostrarResultado(estacion); // Mostrar el resultado
+                    if (resultados.length > 0) {
+                        resultados.forEach(estacion => {
+                            const li = document.createElement("li");
+                            li.textContent = `${estacion.codigo} - ${estacion.nombre}`;
+                            li.addEventListener("click", () => {
+                                // Al hacer clic en una sugerencia, llenar el campo de búsqueda
+                                buscador.value = `${estacion.codigo} - ${estacion.nombre}`;
+                                sugerencias.innerHTML = ""; // Limpiar sugerencias
+                                mostrarResultado(estacion); // Mostrar el resultado
+                            });
+                            sugerencias.appendChild(li);
                         });
-                        sugerencias.appendChild(li);
-                    });
+                        sugerencias.style.display = "block"; // Mostrar el contenedor de sugerencias
+                    } else {
+                        sugerencias.style.display = "none"; // Ocultar si no hay resultados
+                    }
+                } else {
+                    sugerencias.style.display = "none"; // Ocultar si el campo está vacío
+                }
+            });
+
+            // Ocultar sugerencias al hacer clic fuera del buscador
+            document.addEventListener("click", function (event) {
+                if (event.target !== buscador) {
+                    sugerencias.style.display = "none";
                 }
             });
 
