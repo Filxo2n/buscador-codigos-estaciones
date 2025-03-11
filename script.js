@@ -30,9 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 sugerencias.innerHTML = ""; // Limpiar sugerencias anteriores
 
                 if (valor.length > 0) {
+                    // Filtrar resultados que comiencen con el valor ingresado
                     const resultados = datos.filter(estacion =>
-                        estacion.codigo.toUpperCase().includes(valor) ||
-                        estacion.nombre.toUpperCase().includes(valor)
+                        estacion.codigo.toUpperCase().startsWith(valor) || // Coincidencia en el código
+                        estacion.nombre.toUpperCase().startsWith(valor)   // Coincidencia en el nombre
                     );
 
                     if (resultados.length > 0) {
@@ -41,3 +42,33 @@ document.addEventListener("DOMContentLoaded", function () {
                             li.textContent = `${estacion.codigo} - ${estacion.nombre}`;
                             li.addEventListener("click", () => {
                                 // Al hacer clic en una sugerencia, llenar el campo de búsqueda
+                                buscador.value = `${estacion.codigo} - ${estacion.nombre}`;
+                                sugerencias.innerHTML = ""; // Limpiar sugerencias
+                                mostrarResultado(estacion); // Mostrar el resultado
+                            });
+                            sugerencias.appendChild(li);
+                        });
+                        sugerencias.style.display = "block"; // Mostrar el contenedor de sugerencias
+                    } else {
+                        sugerencias.style.display = "none"; // Ocultar si no hay resultados
+                    }
+                } else {
+                    sugerencias.style.display = "none"; // Ocultar si el campo está vacío
+                }
+            });
+
+            // Ocultar sugerencias al hacer clic fuera del buscador
+            document.addEventListener("click", function (event) {
+                if (event.target !== buscador) {
+                    sugerencias.style.display = "none";
+                }
+            });
+
+            // Función para mostrar el resultado
+            function mostrarResultado(estacion) {
+                // Aquí puedes mostrar el resultado en la interfaz
+                alert(`Código: ${estacion.codigo}\nNombre: ${estacion.nombre}`);
+            }
+        })
+        .catch(error => console.error("Error cargando el archivo XLSX:", error));
+});
