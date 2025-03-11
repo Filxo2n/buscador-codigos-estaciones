@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Convertir los datos a un array de objetos { codigo, nombre }
             const datos = estaciones.slice(1).map(row => ({
-                codigo: row[0],
+                codigo: row[0].toString(), // Asegurarse de que el código sea una cadena
                 nombre: row[1]
             }));
 
