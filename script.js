@@ -32,13 +32,21 @@ document.addEventListener("DOMContentLoaded", function () {
                         const li = document.createElement("li");
                         li.textContent = `${estacion.codigo} - ${estacion.nombre}`;
                         li.addEventListener("click", () => {
+                            // Al hacer clic en una sugerencia, llenar el campo de búsqueda
                             buscador.value = `${estacion.codigo} - ${estacion.nombre}`;
-                            sugerencias.innerHTML = "";
+                            sugerencias.innerHTML = ""; // Limpiar sugerencias
+                            mostrarResultado(estacion); // Mostrar el resultado
                         });
                         sugerencias.appendChild(li);
                     });
                 }
             });
+
+            // Función para mostrar el resultado
+            function mostrarResultado(estacion) {
+                // Aquí puedes mostrar el resultado en la interfaz
+                alert(`Código: ${estacion.codigo}\nNombre: ${estacion.nombre}`);
+            }
         })
         .catch(error => console.error("Error cargando el archivo XLSX:", error));
 });
