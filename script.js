@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Convertir los datos a un array de objetos { codigo, nombre }
             const datos = estaciones.slice(1).map(row => {
                 // Verificar que la fila tenga al menos dos columnas
-                if (row[0] && row[1]) {
+                if (row[0] !== undefined && row[1] !== undefined) {
                     return {
                         codigo: row[0].toString(), // Asegurarse de que el código sea una cadena
                         nombre: row[1]
@@ -31,10 +31,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (valor.length > 0) {
                     // Filtrar resultados que comiencen con el valor ingresado
-                    const resultados = datos.filter(estacion =>
-                        estacion.codigo.toUpperCase().startsWith(valor) || // Coincidencia en el código
-                        estacion.nombre.toUpperCase().startsWith(valor)   // Coincidencia en el nombre
-                    );
+                    const resultados = datos.filter(estacion => {
+                        // Verificar que estacion.codigo y estacion.nombre no sean undefined
+                        if (estacion.codigo && estacion.nombre) {
+                            return (
+                                estacion.codigo.toUpperCase().startsWith(valor) || // Coincidencia en el código
+                                estacion.nombre.toUpperCase().startsWith(valor)    // Coincidencia en el nombre
+                            );
+                        }
+                        return false; // Ignorar filas con datos incompletos
+                    });
 
                     if (resultados.length > 0) {
                         resultados.forEach(estacion => {
