@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Estaciones</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>BUSCADOR ESTACIONES</h1>
+        <div class="search-box">
+            <input type="text" id="stationCode" placeholder="CÓDIGO DE ESTACIÓN" onkeyup="filterSuggestions()">
+            <button onclick="clearInput()">✖</button>
+        </div>
+        <ul id="suggestions"></ul>
+        <div class="result">
+            <p id="stationName">NOMBRE ESTACIÓN</p>
+        </div>
+    </div>
+</body>
+</html>
