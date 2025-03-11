@@ -12,10 +12,17 @@ document.addEventListener("DOMContentLoaded", function () {
             const estaciones = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
             // Convertir los datos a un array de objetos { codigo, nombre }
-            const datos = estaciones.slice(1).map(row => ({
-                codigo: row[0].toString(), // Asegurarse de que el código sea una cadena
-                nombre: row[1]
-            }));
+            const datos = estaciones.slice(1).map(row => {
+                // Verificar que la fila tenga al menos dos columnas
+                if (row[0] && row[1]) {
+                    return {
+                        codigo: row[0].toString(), // Asegurarse de que el código sea una cadena
+                        nombre: row[1]
+                    };
+                } else {
+                    return null; // Ignorar filas incompletas
+                }
+            }).filter(Boolean); // Eliminar filas nulas
 
             // Función para mostrar sugerencias
             buscador.addEventListener("input", function () {
@@ -34,33 +41,3 @@ document.addEventListener("DOMContentLoaded", function () {
                             li.textContent = `${estacion.codigo} - ${estacion.nombre}`;
                             li.addEventListener("click", () => {
                                 // Al hacer clic en una sugerencia, llenar el campo de búsqueda
-                                buscador.value = `${estacion.codigo} - ${estacion.nombre}`;
-                                sugerencias.innerHTML = ""; // Limpiar sugerencias
-                                mostrarResultado(estacion); // Mostrar el resultado
-                            });
-                            sugerencias.appendChild(li);
-                        });
-                        sugerencias.style.display = "block"; // Mostrar el contenedor de sugerencias
-                    } else {
-                        sugerencias.style.display = "none"; // Ocultar si no hay resultados
-                    }
-                } else {
-                    sugerencias.style.display = "none"; // Ocultar si el campo está vacío
-                }
-            });
-
-            // Ocultar sugerencias al hacer clic fuera del buscador
-            document.addEventListener("click", function (event) {
-                if (event.target !== buscador) {
-                    sugerencias.style.display = "none";
-                }
-            });
-
-            // Función para mostrar el resultado
-            function mostrarResultado(estacion) {
-                // Aquí puedes mostrar el resultado en la interfaz
-                alert(`Código: ${estacion.codigo}\nNombre: ${estacion.nombre}`);
-            }
-        })
-        .catch(error => console.error("Error cargando el archivo XLSX:", error));
-});
